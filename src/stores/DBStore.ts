@@ -23,7 +23,7 @@ export const useStore = create<DBStore>((set, get) => ({
   faces: [],
   votes: [],
   init: () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const db = new Loki('1.json', {
         autoload: true,
         autoloadCallback: () => {

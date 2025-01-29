@@ -1,14 +1,25 @@
 import { Button } from '@/components/ui/button';
 import {useStore} from '@/stores/DBStore';
+import {useEffect, useState} from 'react';
 import { NavLink } from 'react-router';
 
 const Home = () => {
   const {faces, votes, deleteAllFromDB} = useStore();
-
+  const [result, setResult] = useState({positives: 0, negatives: 0});
   
+  useEffect(()=>{
+    try {
+      const positives = votes.filter((v)=>v.vote === 'Thumb_Up').length
+      const negatives = votes.filter((v)=>v.vote === 'Thumb_Down').length
+      setResult({positives, negatives});
+    } catch (error) {
+      console.log(error);
+    }
+  }, [])
 
   const handleClearDatabase = () => {
     deleteAllFromDB();
+    setResult({positives: 0, negatives: 0});
   };
 
   return (
@@ -22,8 +33,8 @@ const Home = () => {
         <p>Results:</p>
 
         <div>
-          <p>Positives: Z</p>
-          <p>Negatives: Å</p>
+          <p>Positives: {result. positives}</p>
+          <p>Negatives: {result.negatives}</p>
         </div>
       </section>
       <section className="p-8 flex justify-around">
